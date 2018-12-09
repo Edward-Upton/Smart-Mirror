@@ -1,0 +1,140 @@
+{
+    "units": {
+        "distance": "km",
+        "pressure": "mb",
+        "speed": "km/h",
+        "temperature": "C"
+    },
+    "title": "Yahoo! Weather - Newcastle Emlyn, Wales, GB",
+    "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-30076/",
+    "description": "Yahoo! Weather for Newcastle Emlyn, Wales, GB",
+    "language": "en-us",
+    "lastBuildDate": "Sat, 08 Dec 2018 03:42 PM GMT",
+    "ttl": "60",
+    "location": {
+        "city": "Newcastle Emlyn",
+        "country": "United Kingdom",
+        "region": " Wales"
+    },
+    "wind": {
+        "chill": "41",
+        "direction": "265",
+        "speed": "56.33"
+    },
+    "atmosphere": {
+        "humidity": "94",
+        "pressure": "33220.49",
+        "rising": "0",
+        "visibility": "18.51"
+    },
+    "astronomy": {
+        "sunrise": "8:12 am",
+        "sunset": "4:7 pm"
+    },
+    "image": {
+        "title": "Yahoo! Weather",
+        "width": "142",
+        "height": "18",
+        "link": "http://weather.yahoo.com",
+        "url": "http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif"
+    },
+    "item": {
+        "title": "Conditions for Newcastle Emlyn, Wales, GB at 03:00 PM GMT",
+        "lat": "52.035992",
+        "long": "-4.4682",
+        "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-30076/",
+        "pubDate": "Sat, 08 Dec 2018 03:00 PM GMT",
+        "condition": {
+            "code": "23",
+            "date": "Sat, 08 Dec 2018 03:00 PM GMT",
+            "temp": "8",
+            "text": "Breezy"
+        },
+        "forecast": [
+            {
+                "code": "12",
+                "date": "08 Dec 2018",
+                "day": "Sat",
+                "high": "11",
+                "low": "7",
+                "text": "Rain"
+            },
+            {
+                "code": "12",
+                "date": "09 Dec 2018",
+                "day": "Sun",
+                "high": "8",
+                "low": "6",
+                "text": "Rain"
+            },
+            {
+                "code": "28",
+                "date": "10 Dec 2018",
+                "day": "Mon",
+                "high": "9",
+                "low": "5",
+                "text": "Mostly Cloudy"
+            },
+            {
+                "code": "26",
+                "date": "11 Dec 2018",
+                "day": "Tue",
+                "high": "9",
+                "low": "7",
+                "text": "Cloudy"
+            },
+            {
+                "code": "12",
+                "date": "12 Dec 2018",
+                "day": "Wed",
+                "high": "8",
+                "low": "6",
+                "text": "Rain"
+            },
+            {
+                "code": "12",
+                "date": "13 Dec 2018",
+                "day": "Thu",
+                "high": "8",
+                "low": "3",
+                "text": "Rain"
+            },
+            {
+                "code": "39",
+                "date": "14 Dec 2018",
+                "day": "Fri",
+                "high": "9",
+                "low": "3",
+                "text": "Scattered Showers"
+            },
+            {
+                "code": "12",
+                "date": "15 Dec 2018",
+                "day": "Sat",
+                "high": "8",
+                "low": "6",
+                "text": "Rain"
+            },
+            {
+                "code": "39",
+                "date": "16 Dec 2018",
+                "day": "Sun",
+                "high": "8",
+                "low": "5",
+                "text": "Scattered Showers"
+            },
+            {
+                "code": "39",
+                "date": "17 Dec 2018",
+                "day": "Mon",
+                "high": "8",
+                "low": "6",
+                "text": "Scattered Showers"
+            }
+        ],
+        "description": "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/23.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Breezy\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Sat - Rain. High: 11Low: 7\n<BR /> Sun - Rain. High: 8Low: 6\n<BR /> Mon - Mostly Cloudy. High: 9Low: 5\n<BR /> Tue - Cloudy. High: 9Low: 7\n<BR /> Wed - Rain. High: 8Low: 6\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-30076/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n<BR />\n]]>",
+        "guid": {
+            "isPermaLink": "false"
+        }
+    }
+}
