@@ -10,10 +10,12 @@ import json
 
 import designUI
 
+WINDOW_SIZE = [1024,1280]
+
 class ExampleApp(QMainWindow, designUI.Ui_MainWindow):
     def __init__(self, parent=None):
         super(ExampleApp, self).__init__(parent)
-        self.setupUi(self)
+        self.setupUi(self, WINDOW_SIZE)
 
 def moveTopLeft(widget, form):
     w_widget = widget.geometry().width()
@@ -24,22 +26,22 @@ def moveTopLeft(widget, form):
 def moveTopRight(widget, form):
     w_widget = widget.geometry().width()
     h_widget = widget.geometry().height()
-    x_2 = 500 - widget.geometry().width()
+    x_2 = (WINDOW_SIZE[0]/2) - widget.geometry().width()
     geometryRect = QRect(x_2, 0, w_widget, h_widget)
     widget.setParent(form.TopRight)
     widget.setGeometry(geometryRect)
 def moveBottomLeft(widget, form):
     w_widget = widget.geometry().width()
     h_widget = widget.geometry().height()
-    y_2 = 607 - widget.geometry().height()
+    y_2 = (WINDOW_SIZE[1]/2) - widget.geometry().height()
     geometryRect = QRect(0, y_2, w_widget, h_widget)
     widget.setParent(form.BottomLeft)
     widget.setGeometry(geometryRect)
 def moveBottomRight(widget, form):
     w_widget = widget.geometry().width()
     h_widget = widget.geometry().height()
-    x_2 = 500 - widget.geometry().width()
-    y_2 = 607 - widget.geometry().height()
+    x_2 = (WINDOW_SIZE[0]/2) - widget.geometry().width()
+    y_2 = (WINDOW_SIZE[1]/2) - widget.geometry().height()
     geometryRect = QRect(x_2, y_2, w_widget, h_widget)
     widget.setParent(form.BottomRight)
     widget.setGeometry(geometryRect)

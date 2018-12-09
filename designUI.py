@@ -10,11 +10,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QLabel, QWidget, QHBoxLayout
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.resize(1024, 1280)
+    def setupUi(self, MainWindow, WindowSize):
+        MainWindow.resize(WindowSize[0], WindowSize[1])
+        MainWindow.showFullScreen()
         self.CentralWidget = QtWidgets.QWidget(MainWindow)
-        self.CentralWidget.setMinimumSize(QtCore.QSize(1024, 1239))
-        self.CentralWidget.setMaximumSize(QtCore.QSize(1024, 1239))
+        self.CentralWidget.setMinimumSize(QtCore.QSize(WindowSize[0], WindowSize[1]))
+        self.CentralWidget.setMaximumSize(QtCore.QSize(WindowSize[0], WindowSize[1]))
         self.CentralWidget.setStyleSheet("background-color:rgb(0, 0, 0)")
         self.GridLayout = QtWidgets.QGridLayout(self.CentralWidget)
 
