@@ -46,6 +46,7 @@
         "44":"partly cloudy (day)",
         "45":"severe thunderstorms",
         "46":"snow",
-        "47":"thunderstorms"
+        "47":"thunderstorms",
+        "3200":"not available"
     }
 }

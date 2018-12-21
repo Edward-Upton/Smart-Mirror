@@ -11,6 +11,9 @@ import json
 import designUI
 
 WINDOW_SIZE = [1024,1280]
+with open("weatherDisplay.json", "r") as fp:
+    WEATHER_DISPLAY_DICT = json.load(fp)
+
 
 class ExampleApp(QMainWindow, designUI.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -50,9 +53,12 @@ def update_time_label(timeLabel):
     curTime = time.strftime("%H:%M:%S")
     timeLabel.setText(curTime)
 
-def update_weather_widget(weatherWidget, weather):
+def update_weather_widget(mainWeatherIcon, weather):
     WeatherInfo = weather.lookup(30076)
     weatherInfoDict = WeatherInfo.print_obj
+    weatherImageFilename = WEATHER_DISPLAY_DICT["images"][weatherInfoDict["item"]["condition"]["code"]] + ".png"
+    weatherPixmap = QPixmap("MirrorFiles/1x/%s" % weatherImageFilename).scaled(200,200, QtCore.Qt.KeepAspectRatio)
+    mainWeatherIcon.setPixmap(weatherPixmap)
     with open("weatherTempData.json", "w") as fp:
         json.dump(weatherInfoDict, fp)
 
@@ -65,14 +71,12 @@ def main():
     moveTopLeft(form.timeLabel, form)
     form.createWeatherWidget()
     form.weatherWidget.setGeometry(QRect(0,0,500,300))
-    pixmap = QPixmap("MirrorFiles/1x/Sunny.png").scaled(200,200, QtCore.Qt.KeepAspectRatio)
-    sunnyIcon = QLabel(form.weatherWidget)
-    sunnyIcon.setPixmap(pixmap)
+    mainWeatherIcon = form.weatherLabelA1
     moveTopRight(form.weatherWidget, form)
     update_weather_widget(form.weatherWidget, weather)
     weatherUpdateTimer = QtCore.QTimer()
-    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(form.weatherWidget, weather))
-    weatherUpdateTimer.start(900000)
+    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(mainWeatherIcon, weather))
+    weatherUpdateTimer.start(60000)
     timeUpdateTimer = QtCore.QTimer()
     timeUpdateTimer.timeout.connect(lambda: update_time_label(form.timeLabel))
     timeUpdateTimer.start(500)

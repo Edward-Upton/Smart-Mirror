@@ -67,13 +67,29 @@ class Ui_MainWindow(object):
     
     def createWeatherWidget(self):
         self.weatherWidget = QWidget()
+        self.weatherGridLayout = QtWidgets.QGridLayout()
         self.weatherWidget.setStyleSheet("color:rgb(255, 255, 255)")
         font = QtGui.QFont()
         font.setFamily("Century Gothic")
         font.setPointSize(40)
         font.setBold(True)
         font.setKerning(True)
-        self.weatherWidget.setFont(font)
+        self.weatherLabelA1 = QLabel()
+        self.weatherGridLayout.addWidget(self.weatherLabelA1,0,0)
+        self.weatherGridLayout.addWidget(QLabel(),0,1)
+        self.weatherGridLayout.addWidget(QLabel(),0,2)
+        self.weatherGridLayout.addWidget(QLabel(),0,3)
+        self.weatherGridLayout.addWidget(QLabel(),0,4)
+        self.weatherGridLayout.addWidget(QLabel(),0,5)
+        self.weatherGridLayout.addWidget(QLabel(),1,0)
+        self.weatherGridLayout.addWidget(QLabel(),1,1)
+        self.weatherGridLayout.addWidget(QLabel(),1,2)
+        self.weatherGridLayout.addWidget(QLabel(),1,3)
+        self.weatherGridLayout.addWidget(QLabel(),1,4)
+        self.weatherGridLayout.addWidget(QLabel(),1,5)
+        self.weatherWidget.setLayout(self.weatherGridLayout)
+
+
     
     def calendar(self):
         pass

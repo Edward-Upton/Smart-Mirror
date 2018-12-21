@@ -1,0 +1,9 @@
+{
+    "Defaults" : {
+        "Weather-Large" : {
+            "family" : "Century Gothic",
+            "size" : 40,
+            "bold" : "true" 
+        }
+    }
+}
