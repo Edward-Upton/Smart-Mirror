@@ -5,7 +5,6 @@ from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon, QPixmap
 import sys
 import time
-from weather import Weather, Unit
 import json
 
 import designUI
@@ -53,8 +52,8 @@ def update_time_label(timeLabel):
     curTime = time.strftime("%H:%M:%S")
     timeLabel.setText(curTime)
 
-def update_weather_widget(mainWeatherIcon, weather):
-    WeatherInfo = weather.lookup(30076)
+def update_weather_widget(mainWeatherIcon):
+    payload = {"APPID":"49831b5dbeb1aa231811dcfb0de29888"}
     weatherInfoDict = WeatherInfo.print_obj
     weatherImageFilename = WEATHER_DISPLAY_DICT["images"][weatherInfoDict["item"]["condition"]["code"]] + ".png"
     weatherPixmap = QPixmap("MirrorFiles/1x/%s" % weatherImageFilename).scaled(200,200, QtCore.Qt.KeepAspectRatio)
@@ -66,16 +65,15 @@ def update_weather_widget(mainWeatherIcon, weather):
 def main():
     app = QApplication(sys.argv)
     form = ExampleApp()
-    weather = Weather(unit=Unit.CELSIUS)
     form.createTimeWidget()
     moveTopLeft(form.timeLabel, form)
     form.createWeatherWidget()
     form.weatherWidget.setGeometry(QRect(0,0,500,300))
     mainWeatherIcon = form.weatherLabelA1
     moveTopRight(form.weatherWidget, form)
-    update_weather_widget(form.weatherWidget, weather)
+    update_weather_widget(form.weatherWidget)
     weatherUpdateTimer = QtCore.QTimer()
-    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(mainWeatherIcon, weather))
+    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(mainWeatherIcon))
     weatherUpdateTimer.start(60000)
     timeUpdateTimer = QtCore.QTimer()
     timeUpdateTimer.timeout.connect(lambda: update_time_label(form.timeLabel))

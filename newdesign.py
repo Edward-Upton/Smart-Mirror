@@ -5,16 +5,16 @@ from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon, QPixmap
 import sys
 import time
-from weather import Weather, Unit
-from newsapi import NewsApiClient
+from newsapi.newsapi_client import NewsApiClient
 import json
 import flask
-
+import requests
+from datetime import datetime
 DEBUG = True
 APP = flask.Flask(__name__)
 APP.config.from_object(__name__)
 
-WINDOW_SIZE = [1024,1280]
+WINDOW_SIZE = [1024,900]
 with open("weatherDisplay.json", "r") as fp:
     WEATHER_DISPLAY_DICT = json.load(fp)
 
@@ -216,32 +216,27 @@ def forecast_weather_update(form, weatherDict):
                             [form.forecast3WeatherTitle, form.forecast3WeatherIcon, form.forecast3WeatherTemp],
                             [form.forecast4WeatherTitle, form.forecast4WeatherIcon, form.forecast4WeatherTemp],
                             [form.forecast5WeatherTitle, form.forecast5WeatherIcon, form.forecast5WeatherTemp]]
-    i = 0
-    for iter in weatherWidgetElements:
-        forecastDayDict = weatherDict["item"]["forecast"][i]
-        # Day
-        if i == 0:
-            forecastDay = "Today"
-        else:
-            forecastDay = "%s-%s" % (forecastDayDict["day"], forecastDayDict["date"][0:2])
-        iter[0].setText(forecastDay)
-        # Icon
-        weatherImageFilename = WEATHER_DISPLAY_DICT["images"][forecastDayDict["code"]] + ".png"
-        weatherPixmap = QPixmap("MirrorFiles/WeatherIcons/%s" % weatherImageFilename).scaled(90,90, QtCore.Qt.KeepAspectRatio)
-        iter[1].setPixmap(weatherPixmap)
-        # Temperature
-        temperatureText = "%s° / %s°" % (forecastDayDict["high"], forecastDayDict["low"])
-        iter[2].setText(temperatureText)
 
-        i = i + 1
+    for iter in range(len(weatherWidgetElements)):
+        forecastDayTime = weatherDict["list"][iter]
+        forecastTime = datetime.utcfromtimestamp(forecastDayTime["dt"]).strftime('%a @%H')
+        weatherWidgetElements[iter][0].setText(forecastTime)
+
+        weatherImageFilename = forecastDayTime["weather"][0]["icon"] + ".png"
+        weatherPixmap = QPixmap("MirrorFiles/WeatherIcons/%s" % weatherImageFilename).scaled(90, 90, QtCore.Qt.KeepAspectRatio)
+        
+        weatherWidgetElements[iter][1].setPixmap(weatherPixmap)
+
+        temperatureText = "%s° / %s°" % (str(round(forecastDayTime["main"]["temp_max"] - 273.15)), str(round(forecastDayTime["main"]["temp_min"] - 273.15)))
+        weatherWidgetElements[iter][2].setText(temperatureText)
 
 
-def update_weather_widget(form, weather):
-    WeatherInfo = weather.lookup(30076)
-    weatherDict = WeatherInfo.print_obj
-    forecast_weather_update(form, weatherDict)
+def update_weather_widget(form):
+    param = {"APPID":"49831b5dbeb1aa231811dcfb0de29888", "q":"Newcastle Emlyn", "mode":"json"}
+    weatherRequest = requests.get("http://api.openweathermap.org/data/2.5/forecast", params=param)
     with open("weatherTempData.json", "w") as fp:
-        json.dump(weatherDict, fp)
+        json.dump(weatherRequest.json(), fp)
+    forecast_weather_update(form, weatherRequest.json())
 
 def update_news_widget(form, newsapi):
     newsWidgetElements = [[form.newsItem1Header],
@@ -266,28 +261,26 @@ def main():
     form = SmartMirrorApp()
 
     form.create_time_widget()
-    move_top_right(form.timeWidget, form)
+    move_top_left(form.timeWidget, form)
     timeUpdateTimer = QtCore.QTimer()
     timeUpdateTimer.timeout.connect(lambda: update_time_label(form))
     timeUpdateTimer.start(500)
 
-    weather = Weather(unit=Unit.CELSIUS)
     form.create_weather_widget()
-    move_top_left(form.weatherWidget, form)
-    update_weather_widget(form, weather)
+    move_top_right(form.weatherWidget, form)
+    update_weather_widget(form)
     weatherUpdateTimer = QtCore.QTimer()
-    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(form, weather))
+    weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(form))
     weatherUpdateTimer.start(60000)
 
     newsapi = NewsApiClient(api_key='a151e158d26740219c7d611284d01989')
     form.create_news_widget()
-    move_bottom_right(form.newsWidget, form)
+    move_bottom_left(form.newsWidget, form)
     update_news_widget(form, newsapi)
     newsUpdateTimer = QtCore.QTimer()
     newsUpdateTimer.timeout.connect(lambda: update_news_widget(form, newsapi))
     newsUpdateTimer.start(180000)
 
-    APP.run(host="0.0.0.0", port=80, debug=DEBUG)
     app.exec_()
 
 if __name__ == '__main__':
