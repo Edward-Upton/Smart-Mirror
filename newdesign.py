@@ -14,7 +14,7 @@ DEBUG = True
 APP = flask.Flask(__name__)
 APP.config.from_object(__name__)
 
-WINDOW_SIZE = [1024,900]
+WINDOW_SIZE = [1024, 1280]
 with open("weatherDisplay.json", "r") as fp:
     WEATHER_DISPLAY_DICT = json.load(fp)
 
@@ -27,7 +27,7 @@ class SmartMirrorApp(QMainWindow):
         super(SmartMirrorApp, self).__init__(parent)
         # Window Initialisation
         self.mainWindow = QMainWindow()
-        self.mainWindow.resize(WINDOW_SIZE[0], WINDOW_SIZE[1])
+        #self.mainWindow.resize(WINDOW_SIZE[0], WINDOW_SIZE[1])
         self.mainWindow.showFullScreen()
         
         self.centralWidget = QWidget(self.mainWindow)
@@ -49,7 +49,7 @@ class SmartMirrorApp(QMainWindow):
         self.mainWindow.setCentralWidget(self.centralWidget)
         QtCore.QMetaObject.connectSlotsByName(self.mainWindow)
         pDesktop = QApplication.desktop()
-        rectScreen2 = pDesktop.screenGeometry(2)
+        rectScreen2 = pDesktop.screenGeometry(0)
 
         self.mainWindow.move(rectScreen2.left(), rectScreen2.top())
         self.mainWindow.resize(rectScreen2.width(), rectScreen2.height())
@@ -91,14 +91,14 @@ class SmartMirrorApp(QMainWindow):
 
     def create_time_widget(self):
         self.timeWidget = QWidget()
-        self.timeWidget.setGeometry(QRect(0,0,410,150))
+        self.timeWidget.setGeometry(QRect(0,0,500,150))
         self.timeLabel = QLabel()
-        self.timeLabel.setStyleSheet("color:rgb(255, 255, 255); font-family:Century Gothic,arial,sans-serif; font-size: 100px; font-weight: bold;")
-        self.timeLabel.setGeometry(QRect(0,0,400,100))
+        self.timeLabel.setStyleSheet("color:rgb(255, 255, 255); font-family:Century Gothic,arial,sans-serif; font-size: 90px; font-weight: bold;")
+        self.timeLabel.setGeometry(QRect(0,0,500,100))
         self.timeLabel.setParent(self.timeWidget)
         self.dayLabel = QLabel()
         self.dayLabel.setStyleSheet("color:rgb(255, 255, 255); font-family:Century Gothic,arial,sans-serif; font-size: 50px;")
-        self.dayLabel.setGeometry(QRect(0,100,400,50))
+        self.dayLabel.setGeometry(QRect(0,100,500,50))
         self.dayLabel.setParent(self.timeWidget)
     
     def create_weather_widget(self):
@@ -227,7 +227,7 @@ def forecast_weather_update(form, weatherDict):
         
         weatherWidgetElements[iter][1].setPixmap(weatherPixmap)
 
-        temperatureText = "%s° / %s°" % (str(round(forecastDayTime["main"]["temp_max"] - 273.15)), str(round(forecastDayTime["main"]["temp_min"] - 273.15)))
+        temperatureText = "%s / %s" % (str(round(forecastDayTime["main"]["temp_max"] - 273.15)), str(round(forecastDayTime["main"]["temp_min"] - 273.15)))
         weatherWidgetElements[iter][2].setText(temperatureText)
 
 
