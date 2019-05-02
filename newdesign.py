@@ -108,7 +108,7 @@ class SmartMirrorApp(QMainWindow):
 
         # Forecast 1
         self.forecast1WeatherTitle = QLabel()
-        self.forecast1WeatherTitle.setStyleSheet("font-size: 25px; font-weight: bold; text-align: centre;")
+        self.forecast1WeatherTitle.setStyleSheet("font-size: 22px; font-weight: bold; text-align: centre;")
         self.forecast1WeatherTitle.setGeometry(QRect(0,0,90,40))
         self.forecast1WeatherTitle.setParent(self.weatherWidget)
         self.forecast1WeatherIcon = QLabel()
@@ -121,7 +121,7 @@ class SmartMirrorApp(QMainWindow):
 
         # Forecast 2
         self.forecast2WeatherTitle = QLabel()
-        self.forecast2WeatherTitle.setStyleSheet("font-size: 25px; font-weight: bold; text-align: centre;")
+        self.forecast2WeatherTitle.setStyleSheet("font-size: 22px; font-weight: bold; text-align: centre;")
         self.forecast2WeatherTitle.setGeometry(QRect(101,0,100,40))
         self.forecast2WeatherTitle.setParent(self.weatherWidget)
         self.forecast2WeatherIcon = QLabel()
@@ -134,7 +134,7 @@ class SmartMirrorApp(QMainWindow):
 
         # Forecast 3
         self.forecast3WeatherTitle = QLabel()
-        self.forecast3WeatherTitle.setStyleSheet("font-size: 25px; font-weight: bold; text-align: centre;")
+        self.forecast3WeatherTitle.setStyleSheet("font-size: 22px; font-weight: bold; text-align: centre;")
         self.forecast3WeatherTitle.setGeometry(QRect(202,0,90,40))
         self.forecast3WeatherTitle.setParent(self.weatherWidget)
         self.forecast3WeatherIcon = QLabel()
@@ -147,7 +147,7 @@ class SmartMirrorApp(QMainWindow):
 
         # Forecast 4
         self.forecast4WeatherTitle = QLabel()
-        self.forecast4WeatherTitle.setStyleSheet("font-size: 25px; font-weight: bold; text-align: centre;")
+        self.forecast4WeatherTitle.setStyleSheet("font-size: 22px; font-weight: bold; text-align: centre;")
         self.forecast4WeatherTitle.setGeometry(QRect(303,0,90,40))
         self.forecast4WeatherTitle.setParent(self.weatherWidget)
         self.forecast4WeatherIcon = QLabel()
@@ -160,7 +160,7 @@ class SmartMirrorApp(QMainWindow):
 
         # Forecast 5
         self.forecast5WeatherTitle = QLabel()
-        self.forecast5WeatherTitle.setStyleSheet("font-size: 25px; font-weight: bold; text-align: centre;")
+        self.forecast5WeatherTitle.setStyleSheet("font-size: 22px; font-weight: bold; text-align: centre;")
         self.forecast5WeatherTitle.setGeometry(QRect(404,0,90,40))
         self.forecast5WeatherTitle.setParent(self.weatherWidget)
         self.forecast5WeatherIcon = QLabel()
@@ -219,7 +219,7 @@ def forecast_weather_update(form, weatherDict):
 
     for iter in range(len(weatherWidgetElements)):
         forecastDayTime = weatherDict["list"][iter]
-        forecastTime = datetime.utcfromtimestamp(forecastDayTime["dt"]).strftime('%a @%H')
+        forecastTime = datetime.utcfromtimestamp(forecastDayTime["dt"]).strftime('%a@%H')
         weatherWidgetElements[iter][0].setText(forecastTime)
 
         weatherImageFilename = forecastDayTime["weather"][0]["icon"] + ".png"
@@ -261,13 +261,13 @@ def main():
     form = SmartMirrorApp()
 
     form.create_time_widget()
-    move_top_left(form.timeWidget, form)
+    move_top_right(form.timeWidget, form)
     timeUpdateTimer = QtCore.QTimer()
     timeUpdateTimer.timeout.connect(lambda: update_time_label(form))
     timeUpdateTimer.start(500)
 
     form.create_weather_widget()
-    move_top_right(form.weatherWidget, form)
+    move_bottom_left(form.weatherWidget, form)
     update_weather_widget(form)
     weatherUpdateTimer = QtCore.QTimer()
     weatherUpdateTimer.timeout.connect(lambda: update_weather_widget(form))
@@ -275,7 +275,7 @@ def main():
 
     newsapi = NewsApiClient(api_key='a151e158d26740219c7d611284d01989')
     form.create_news_widget()
-    move_bottom_left(form.newsWidget, form)
+    move_top_left(form.newsWidget, form)
     update_news_widget(form, newsapi)
     newsUpdateTimer = QtCore.QTimer()
     newsUpdateTimer.timeout.connect(lambda: update_news_widget(form, newsapi))
