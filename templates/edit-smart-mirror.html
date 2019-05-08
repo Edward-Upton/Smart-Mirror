@@ -1,0 +1,88 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Smart Mirror Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css">
+    <script src="../static/main.js"></script>
+    <script src="../static/scripts/multirange.js"></script>
+    <link rel="stylesheet" href="../static/styling/multirange.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class='container-fluid mt-4 text-center'>
+        <h2>Smart Mirror Control</h3>
+    </div>
+    <div style="text-align: center;" class="alert alert-info">
+        This web application will allow you to change different features of the smart mirror.
+    </div>
+    <form method="POST" id="controlUpdateForm" action="/control-widget-update">
+    </form>
+    <div class='card-deck' style="padding: 10px;">
+        <div class="card">
+            <div class="card-body" style="text-align: center; ">
+                <h5 class="card-title">Time Widget</h5>
+                <select class='form-control' form="controlUpdateForm" id='timeWidget'
+                    name='timeWidget'>
+                    <option selected disabled hidden>Move Widget Here</option>
+                    <option value='0'>Top Left</option>
+                    <option value='1'>Top Right</option>
+                    <option value='2'>Bottom Left</option>
+                    <option value='3'>Bottom Right</option>
+                    <option value='4'>Toggle Visibility</option>
+                </select>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body" style="text-align: center; ">
+                <h5 class="card-title">News Widget</h5>
+                <select class='form-control' form="controlUpdateForm" id='newsWidget'
+                    name='newsWidget'>
+                    <option selected disabled hidden>Move Widget Here</option>
+                    <option value=0>Top Left</option>
+                    <option value=1>Top Right</option>
+                    <option value=2>Bottom Left</option>
+                    <option value=3>Bottom Right</option>
+                    <option value='4'>Toggle Visibility</option>
+                </select>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body" style="text-align: center; ">
+                <h5 class="card-title">Weather Widget</h5>
+                <select style="display: inline-block;" class='form-control' form="controlUpdateForm" id='weatherWidget'
+                    name='weatherWidget'>
+                    <option selected disabled hidden>Move Widget Here</option>
+                    <option value=0>Top Left</option>
+                    <option value=1>Top Right</option>
+                    <option value=2>Bottom Left</option>
+                    <option value=3>Bottom Right</option>
+                    <option value='4'>Toggle Visibility</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script>
+            var timeSelect = document.getElementById('timeWidget');
+            var timeToggle = document.getElementById('timeToggle');
+            timeSelect.onchange = function() {
+                document.getElementById('controlUpdateForm').submit();
+            }
+            timeToggleClicked = function() {
+                document.getElementById('controlUpdateForm').submit();
+            }
+
+            var newsSelect = document.getElementById('newsWidget');
+            newsSelect.onchange = function() {
+                document.getElementById('controlUpdateForm').submit();
+            }
+
+            var weatherSelect = document.getElementById('weatherWidget');
+            weatherSelect.onchange = function() {
+                document.getElementById('controlUpdateForm').submit();
+            }
+        </script>
+        <div style="text-align: center;" class="alert alert-secondary">You can view and download the code on <a href="https://www.github.com/engiego/Smart-Mirror">Github</a>.</div>
+</body>
