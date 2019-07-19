@@ -5,6 +5,7 @@ import sys, time, requests, threading
 from datetime import datetime
 from newsapi.newsapi_client import NewsApiClient
 from flask import Flask, render_template, request, redirect
+import json
 
 from SmartMirrorForm import SmartMirrorForm
 
@@ -80,8 +81,13 @@ class Application():
                     [self.qtForm.newsItem3Header],
                     [self.qtForm.newsItem4Header],
                     [self.qtForm.newsItem5Header]]
-
-        topHeadlines = self.newsapi.get_top_headlines(sources='bbc-news')
+        try:
+            topHeadlines = self.newsapi.get_top_headlines(sources='bbc-news')
+            with open('newsTempData.json', 'w') as newsFile:
+                json.dump(topHeadlines, newsFile)
+        except:
+            with open('newsTempData.json', 'r') as newsFile:
+                topHeadlines = json.load(newsFile)
         self.qtForm.newsHeader.setText("BBC News")
 
         i = 0
@@ -91,13 +97,21 @@ class Application():
 
     def update_weather_widget(self):
         param = {"APPID": WEATHERAPI_KEY, "q":WEATHERAPI_LOCATION, "mode":"json"}
-        weatherRequest = requests.get("http://api.openweathermap.org/data/2.5/forecast", params=param)
+        try:
+            weatherRequest = requests.get("http://api.openweathermap.org/data/2.5/forecast", params=param)
+            weatherDict = weatherRequest.json()
+            with open('weatherTempData.json', 'w') as weatherFile:
+                json.dump(weatherDict, weatherFile)
+        except:
+            with open('weatherTempData.json', 'r') as weatherFile:
+                weatherDict = json.load(weatherFile)
+
         weatherWidgetElements = [[self.qtForm.forecast1WeatherTitle, self.qtForm.forecast1WeatherIcon, self.qtForm.forecast1WeatherTemp],
                             [self.qtForm.forecast2WeatherTitle, self.qtForm.forecast2WeatherIcon, self.qtForm.forecast2WeatherTemp],
                             [self.qtForm.forecast3WeatherTitle, self.qtForm.forecast3WeatherIcon, self.qtForm.forecast3WeatherTemp],
                             [self.qtForm.forecast4WeatherTitle, self.qtForm.forecast4WeatherIcon, self.qtForm.forecast4WeatherTemp],
                             [self.qtForm.forecast5WeatherTitle, self.qtForm.forecast5WeatherIcon, self.qtForm.forecast5WeatherTemp]]
-        weatherDict = weatherRequest.json()
+        
         for iter in range(len(weatherWidgetElements)):
             forecastDayTime = weatherDict["list"][iter]
             forecastTime = datetime.utcfromtimestamp(forecastDayTime["dt"]).strftime('%a@%H')
